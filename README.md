@@ -1,6 +1,7 @@
 # self-driving-perception-stack
 
-## you can run the detectlanes.py from the cmd with the arguments(input file path , debug flag >>0 , 1 for debugging)
+## you can run the detectlanes.py from the cmd with the arguments:
+(input file path , debug flag >>0 , 1 for debugging)
 
 examples:
 
