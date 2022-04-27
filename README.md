@@ -7,4 +7,5 @@ examples:
 
     python detect_lanes.py project_data/project_video.mp4 0
     
+    
     python detect_lanes.py project_data/test_images/test1.jpg 1
