@@ -14,6 +14,8 @@ examples:
 ## you can run the detect_cars.py from the cmd with the arguments:
 (input file path)
 
-examples:
+example:
     
-    python detect_lanes.py project_data/project_video.mp4 0
+    python detect_cars.py challenge_video.mp4
+    
+    
