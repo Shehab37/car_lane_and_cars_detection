@@ -9,6 +9,10 @@ examples:
     
     
     python detect_lanes.py project_data/test_images/test1.jpg 1
+    
+![image](https://user-images.githubusercontent.com/20583611/170712952-fc563aec-5fa0-418c-b3d4-14d736c95bdb.png)
+![image](https://user-images.githubusercontent.com/20583611/170713060-7b50812a-6de6-4b6c-89f4-ba5ac9aaa555.png)
+
 
 
 ## you can run the detect_cars.py from the cmd with the arguments:
