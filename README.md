@@ -1,5 +1,7 @@
 # self-driving-perception-stack
 
+# Car lane detection
+
 ## you can run the detect_lanes.py from the cmd with the arguments:
 (input file path , debug flag >>0 , 1 for debugging)
 
@@ -14,6 +16,7 @@ examples:
 ![image](https://user-images.githubusercontent.com/20583611/170713060-7b50812a-6de6-4b6c-89f4-ba5ac9aaa555.png)
 
 
+# Vehicle detection
 
 ## you can run the detect_cars.py from the cmd with the arguments:
 (input file path)
