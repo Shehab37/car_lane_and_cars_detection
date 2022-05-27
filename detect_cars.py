@@ -10,6 +10,8 @@ config_path = os.path.join("yolo", "yolov3.cfg")
 labels_path = os.path.join("yolo", "coco.names")
 
 net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
+# net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+# net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 names = net.getLayerNames()
 # (h, w) = img.shape[:2]
 (h, w) = (720, 1280)
@@ -35,28 +37,35 @@ def yolo_pipeline(img):
             classID = np.argmax(scores)
             confidence = scores[classID]
 
-            if(confidence > 0.85):
-                box = detection[:4] * np.array([w, h, w, h])
-                bx, by, bw, bh = box.astype("int")
+            # if(confidence >0.85):
+            box = detection[:4] * np.array([w, h, w, h])
+            bx, by, bw, bh = box.astype("int")
 
-                x = int(bx - (bw / 2))
-                y = int(by - (bh / 2))
+            x = int(bx - (bw / 2))
+            y = int(by - (bh / 2))
 
-                boxes.append([x, y, int(bw), int(bh)])
-                confidences.append(float(confidence))
-                classIDs.append(classID)
+            boxes.append([x, y, int(bw), int(bh)])
+            confidences.append(float(confidence))
+            classIDs.append(classID)
 
-    idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.8, 0.8)
+    idxs = cv2.dnn.NMSBoxes(
+        boxes, confidences,  score_threshold=0.4, nms_threshold=0.2)
     if len(idxs) == 0:
         return img
     for i in idxs.flatten():
-        # for i in range(len(boxes)):
+        # print(boxes[i] , labels[classIDs[i]] , confidences[i])
+
         (x, y) = [boxes[i][0], boxes[i][1]]
         (W, H) = [boxes[i][2], boxes[i][3]]
-        cv2.rectangle(img, (x, y), (x + W, y + H), (0, 255, 255), 2)
-        cv2.putText(img, f'{labels[classIDs[i]]} {round(confidences[i],3)}',
-                    (x, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 139, 139), 2)
 
+        cv2.rectangle(img,
+                      (x, y),
+                      (x + W, y + H),
+                      (230, 126, 34),
+                      2)
+
+        cv2.putText(img, f'{labels[classIDs[i]]} {round(confidences[i],1)}', (
+            x, y-3), cv2.FONT_HERSHEY_DUPLEX, 0.5, (230, 126, 34), 1, cv2.LINE_AA)
     return img
 
 
@@ -73,6 +82,6 @@ if __name__ == "__main__":
 
     input_path = sys.argv[1]
 
-    # start = timer()
+    start = timer()
     create_output(input_path)
-    # print("with GPU:", timer()-start)
+    print("without GPU:", timer()-start)
